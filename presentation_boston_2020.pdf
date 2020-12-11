@@ -1,0 +1,752 @@
+\documentclass[xcolor=table]{beamer}
+\usetheme{Madrid}
+%\usetheme{metropolis}
+\usepackage[style=numeric, sorting=none, sortcites=true, maxnames=1, giveninits=true, autocite=superscript, doi=false, url=false, isbn=false, backend=biber, style=verbose-note, citetracker=false, pagetracker=false, bibencoding=utf8]{biblatex}
+% \usepackage[backend=bibtex,style=authoryear-comp,citestyle=authoryear-comp,firstinits=true,sorting=none,maxnames=1,doi=false,isbn=false,url=false,eprint=false]{biblatex}
+
+% Gobbling first names
+
+\AtEveryCitekey{%
+   \clearfield{shorttitle}%
+   \clearfield{month}%
+   \ifentrytype{article}{%
+      \clearfield{title}%
+   }{}
+   }
+
+% "blindfootcite" is the equivalent of "footcite" except the number marker does not appear
+\newcommand\blfootcite[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{\hspace{-4ex}\cite{#1}}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+\definecolor{mydarkgray}{HTML}{babac0}
+\renewcommand*{\multicitedelim}{\textcolor{mydarkgray}{\addsemicolon}}
+\setbeamerfont{footnote}{size=\scriptsize}
+\renewcommand\footnoterule{\kern-3pt \color{mydarkgray}\hrule width \textwidth height 0.4pt \color{black} \kern 2.6pt}
+
+\renewbibmacro{in:}{}
+\DeclareFieldFormat{pages}{\mkfirstpage{#1}}
+\beamertemplatenavigationsymbolsempty
+\bibliography{/home/elinscott/Dropbox/zotero_library.bib}
+\setbeamertemplate{bibliography item}[text]
+\renewbibmacro{in:}{}
+\AtEveryBibitem{\clearfield{title}}
+\AtEveryBibitem{\clearfield{month}}
+\AtEveryBibitem{\clearfield{pages}}
+\DeclareNameAlias{default}{given-family}
+
+\renewcommand*{\bibfont}{\tiny}
+\usepackage{amssymb}
+\usepackage{epsfig}
+\usepackage{psfrag}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{multimedia}
+\usepackage{subcaption}
+%\usepackage{style}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage[table]{xcolor}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,arrows,backgrounds,calc,fit,trees}
+\usepackage{lipsum}
+\usetikzlibrary{calc}
+\newlength{\myfigscale}
+\setlength{\myfigscale}{0.3cm}
+\usepackage{smartdiagram}
+\usesmartdiagramlibrary{additions}
+\usepackage{multicol}
+\usepackage{sansmath}
+\sansmath
+\usepackage{helvet}
+\usepackage{chronology}
+\usepackage[normalem]{ulem} % for sout (strike out)
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,hooks}
+\tcbset{colframe=structure,fonttitle=\bfseries,beamer, clip upper, boxsep=0pt, sharp corners=all, no shadow, left skip=0pt, right skip=0pt, coltext=white}
+
+% For electron orbital diagrams
+\usepackage{tikzorbital}
+% Changing defaults
+\pgfkeys{tikzorbital/drawLevel/width = 0.666666}
+\pgfkeys{tikzorbital/drawLevel/style = {line width = 1pt, color = black!80, line cap = round}}
+\pgfkeys{tikzorbital/drawLevel/spinlength = 0.666666}
+\pgfkeys{tikzorbital/drawLevel/spinstyle = {very thick, color = black!80, -stealth}}
+
+\definecolor{darkblue}{rgb}{0,0.243,0.447}
+\definecolor{camred}{RGB}{238, 38, 66}
+\definecolor{lightblue}{rgb}{0.0,0.45,0.81}
+\definecolor{lighterblue}{rgb}{0.415,0.678,0.894}
+\definecolor{vdarkblue}{rgb}{0,0.162,0.298}
+\definecolor{tan}{RGB}{244, 238, 208}
+\definecolor{mygray}{RGB}{234, 234, 224}
+\input{seaborn_colours.tex}
+
+% For the flowchart
+\tikzstyle{box0}    = [rectangle, fill=seaborn_blue,    text centered, rounded corners, text=white, font=\sffamily\footnotesize]
+\tikzstyle{box1}    = [rectangle, fill=seaborn_red,     text centered, rounded corners, text=white, font=\sffamily\footnotesize]
+\tikzstyle{box1b}   = [rectangle, fill=seaborn_red,     text centered,                  text=black, font=\sffamily\footnotesize]
+\tikzstyle{box2}    = [rectangle, fill=seaborn_green,   text centered, rounded corners, text=black, font=\sffamily\footnotesize]
+\tikzstyle{box3}    = [rectangle, fill=seaborn_bg_grey, text centered, rounded corners, text=black, font=\sffamily\footnotesize]
+\tikzstyle{diamond} = [diamond,   fill=seaborn_red,     text badly centered, inner sep=0pt,         font=\sffamily\footnotesize]
+\tikzstyle{dummy} = [font=\tiny]
+\tikzstyle{boxwhite} = [rectangle, fill=white, text centered, text=black,   font=\footnotesize, font=\sffamily, rounded corners=0.1cm]
+\tikzstyle{arrowlessline} = [draw, ultra thick]
+\tikzstyle{line} = [draw, ultra thick, -latex']
+% For tikz diagrams with nodes appearing on each slide
+\tikzset{
+  invisible/.style={opacity=0},
+  visible on/.style={alt={#1{}{invisible}}},
+  alt/.code args={<#1>#2#3}{%
+    \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+  },
+}
+
+\usepackage{array}
+\usepackage{multirow}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+
+% For checklist
+%\usepackage{enumitem}
+%\newlist{todolist}{itemize}{2}
+%\setlist[todolist]{label=$\square$}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand{\done}{\rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\cmark}}%
+\hspace{-2.5pt}}
+\newcommand{\wontfix}{\rlap{$\square$}{\large\hspace{1pt}\xmark}}
+
+\newcommand{\bra}[1]{\langle #1|}
+\newcommand{\braket}[2]{\langle #1|#2\rangle}
+\newcommand{\braopket}[3]{\langle #1|#2|#3\rangle}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\nline}{\nonumber \\}
+\newcommand{\Trace}{\mathrm{Tr}}
+
+\numberwithin{equation}{section}
+\usefonttheme{professionalfonts}
+%\usefonttheme[stillsansseriflarge,stillsansserifsmall]{serif}
+
+\newlength{\myimscale}
+
+
+% For code blocks in latex
+% Taken from https://github.com/daveyarwood/gruvbox-pygments
+% N.B.
+%  - frame must have [fragile]
+%  - use \begin{onlyenv} not \only
+%  - after a lot of mucking around, I created gruvbox_plain as another style
+%    that exclusively uses gruvbox's bg and fg with no syntax highlighting
+%  - use [autogobble] to remove leading indentations
+
+% \usepackage{minted}
+% \usemintedstyle{gruvbox}
+% \definecolor{gruvbox_dark_bg}{HTML}{282828}
+% \definecolor{gruvbox_fg}{HTML}{ebdbb2}
+% \setminted[python]{bgcolor=gruvbox_dark_bg}
+% \setminted[json]{bgcolor=gruvbox_dark_bg}
+% \setminted[shell-session]{style=gruvbox_plain, bgcolor=gruvbox_dark_bg}
+
+\lstset{breaklines,breakatwhitespace,breakautoindent=false,showstringspaces=false}
+\lstset{keywordstyle=\color{purple}}
+\lstset{identifierstyle=\color{blue}}
+\lstset{basicstyle=\fontfamily{pcr}\fontsize{9pt}{9pt}\selectfont}
+%\lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt}
+\lstset{linewidth=4.9in,xleftmargin=10pt}
+
+\definecolor{darkblue}{rgb}{0,0.243,0.447}
+\definecolor{camred}{RGB}{238, 38, 66}
+\definecolor{lightblue}{rgb}{0.0,0.45,0.81}
+\definecolor{lighterblue}{rgb}{0.415,0.678,0.894}
+\definecolor{vdarkblue}{rgb}{0,0.162,0.298}
+\definecolor{tan}{RGB}{244, 238, 208}
+\definecolor{mygray}{RGB}{234, 234, 242}
+
+% Duller versions
+\definecolor{darkblue}{HTML}{315472}
+\definecolor{camred}{HTML}{ae393f}
+\definecolor{lightblue}{HTML}{315472}
+\definecolor{lighterblue}{HTML}{315472}
+
+\setbeamercolor{frametitle}{bg=darkblue,fg=white}
+\setbeamerfont{normal text}{family=helvet}
+\setbeamerfont{local structure}{family=helvet}
+
+\setbeamercolor*{author in head/foot}{bg=darkblue}
+\setbeamercolor*{logo in head/foot}{bg=darkblue,fg=white}
+\setbeamercolor*{title in head/foot}{bg=darkblue,fg=white}
+\setbeamercolor*{date in head/foot}{bg=darkblue,fg=white}
+\setbeamercolor{title}{bg=darkblue}
+\setbeamercolor{under headline}{bg=camred}
+\setbeamercolor{footline}{bg=darkblue}
+\setbeamercolor{caption name}{fg=darkblue}
+
+% Footnote style and colour
+% No line over footnote
+\setbeamercolor{footnote}{fg=mydarkgray}
+
+\setbeamertemplate{itemize items}{\normalsize $\bullet$}
+\setbeamercolor{itemize item}{fg=lightblue}
+\setbeamercolor{itemize subitem}{fg=darkblue}
+
+\setbeamercolor*{bibliography entry title}{fg=mydarkgray}
+\setbeamercolor*{bibliography entry author}{fg=mydarkgray}
+\setbeamercolor*{bibliography entry location}{fg=mydarkgray}
+\setbeamercolor*{bibliography entry note}{fg=mydarkgray}
+% and kill the abominable icon
+\setbeamertemplate{bibliography item}[text]
+
+\setbeamerfont*{title in head/foot}{size=\small}
+\setbeamerfont*{date in head/foot}{size=\small}
+\setbeamerfont*{institute}{size=\Large}
+
+\setbeamertemplate{frametitle}
+{
+  \leavevmode%
+  \vspace{-20pt}
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1cm]{frametitle}
+   \hspace{0.115em}
+   \vphantom{P/p} \bf \insertframetitle \vspace{0.2cm}
+   \end{beamercolorbox}%
+  %  \vskip-0.6cm%
+  % \begin{beamercolorbox}[wd=\paperwidth,ht=0.5ex]{under headline}%
+  %   \end{beamercolorbox}%
+	
+}
+\setbeamertemplate{title page}
+{
+  \leavevmode%
+  \vbox{%
+  \vspace{-4.1ex}%
+  \noindent\begin{tcolorbox}[enhanced,watermark graphics=/home/elinscott/Pictures/epfl_photos/EPFL-vue-aerienne-1536x864.jpg, width=0.975\paperwidth, height=0.5\paperwidth, watermark zoom=1.2, grow to left by=0.035\paperwidth]
+  \vspace{0.8ex}
+  \begin{minipage}{\textwidth}
+   \begin{flushright}
+   \includegraphics[height=0.05\textheight]{/home/elinscott/Pictures/epfl_logos/white_cropped.eps}\hspace{1ex}
+  \end{flushright}   
+  \end{minipage}
+
+  \begin{minipage}{0.94\paperwidth}%
+  \vspace{0.43\paperheight}
+  \end{minipage}
+  \end{tcolorbox}
+
+  % Bad attempt at drop-shadow
+  % \begin{minipage}{0.94\paperwidth}%
+  % \vspace{0.44\paperheight}
+  %    \begin{tikzpicture}[overlay]
+  %        \node[anchor = south west, opacity=.1] at (-0.01, -0.01)
+  %        {\usebeamerfont{title}\color{black}\noindent\huge\bf\inserttitle};
+  %        \node[anchor = south west, opacity=.1] at (0.01, -0.01)
+  %        {\usebeamerfont{title}\color{black}\noindent\huge\bf\inserttitle};
+  %        \node[anchor = south west, opacity=.1] at (-0.01, 0.01)
+  %        {\usebeamerfont{title}\color{black}\noindent\huge\bf\inserttitle};
+  %        \node[anchor = south west, opacity=.1] at (0.01, 0.01)
+  %        {\usebeamerfont{title}\color{black}\noindent\huge\bf\inserttitle};
+  %        \node[anchor = south west] at (0.0, 0.0)
+  %        {\usebeamerfont{title}\noindent\huge\bf\inserttitle};
+  %    \end{tikzpicture}
+  % \end{minipage}
+  % \end{tcolorbox}
+  %   \end{beamercolorbox}
+  }
+  %  \begin{flushright}
+  \vspace{-2ex}
+
+  \inserttitle
+
+  \vspace{1ex}
+  \footnotesize \insertauthor
+
+  \tiny \insertdate    
+  %  \end{flushright}
+
+	
+}
+%\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamertemplate{footline}
+{
+}
+
+
+% Title slide %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \title[Beamer Intro]{\noindent Strongly correlated biological systems\\\Large DFT and beyond}
+\title{\noindent\Large\textbf{Correcting the failings of DFT:}\\
+\footnotesize\textbf{DFT+\emph{U}, Koopmans spectral functionals, and dynamical mean field theory}}
+\author{Edward Linscott}
+\institute[THEOS]{Theory and Simulation of Materials, EPFL}
+\date{Quantum Fluids in Isolation Virtual Seminar Series, 10 Dec 2020}
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+
+\begin{frame}{Outline}
+
+   The general problem: many body electronic Hamiltonian
+
+   \begin{align*}
+      \hat H =
+      -\frac{1}{2} \sum_i \nabla_i^2
+      +\frac{1}{2}\sum_{i \neq j}\frac{1}{|\mathbf{r}_i-\mathbf{r}_j|}
+      - \sum_{i,I}\frac{Z_I}{|\mathbf{r}_i-\mathbf{R}_I|} \\
+      - \sum_I\frac{1}{2M_I}\nabla_I^2
+      + \frac{1}{2}\sum_{I \neq J}\frac{Z_IZ_J}{|\mathbf{R}_I-\mathbf{R}_J|}
+  \end{align*}
+
+   $\Psi(\mathbf{r}_1,...,\mathbf{r}_N)$ is $3N$-dimensional
+
+\end{frame}
+
+
+\begin{frame}{Outline}
+
+   \small
+
+    Density functional theory (DFT)
+
+    \begin{itemize}
+		\item Hohenberg-Kohn: $\rho(\mathbf{r})$ instead of $\Psi(\mathbf{r}_1,...,\mathbf{r}_N)$
+		\begin{equation*}
+		   E[\rho(\mathbf{r})] \geq E_{GS}; \qquad E[\rho_{GS}(\mathbf{r})] = E_{GS}
+      \end{equation*}
+		% \begin{equation*}
+		% 	E[\rho] = \int d\mathbf{r} \, \big( \underbrace{V_{ext}(\mathbf{r})\rho(\mathbf{r})}_\text{nuclear\ potential}  + \underbrace{F[\rho(\mathbf{r})]}_{\substack{\text{universal}\\\text{functional}\\\text{(unknown)}}}\big)
+		% \end{equation*}
+		\item Kohn Sham: mapping to a tractable, single-particle problem BUT exchange and correlation must be approximated
+		\begin{equation*}
+			E[\rho] = \underbrace{T_0[\rho]}_{\substack{\text{kinetic}\\ \text{energy}}} + \int d\mathbf{r} \, \rho(\mathbf{r}) [V_{ext}(\mathbf{r}) + \underbrace{\tfrac{1}{2}\Phi(\mathbf{r})}_{\substack{\text{Hartree}\\\text{potential}}}] + \underbrace{E_{xc}[\rho]}_{\substack{\text{xc-functional}\\\text{(approximated)}}}
+		\end{equation*}
+      \begin{equation*}
+      V_\mathrm{eff}(\mathbf{r}) = V_\mathrm{ext}(\mathbf{r}) + \Phi(\mathbf{r}) + \frac{\delta E_{xc}[\rho]}{\delta \rho(\mathbf{r})}
+      \end{equation*}
+	\end{itemize}
+
+   End result: a non-interacting system which must be solved self-consistently
+   \begin{equation*}
+   \left[-\frac{1}{2}\nabla^2+V_\text{eff}[\rho](\mathbf{r})\right]\varphi_i(\mathbf{r}) = \epsilon_i \varphi_i(\mathbf{r}); \qquad
+   \rho(\mathbf{r}) = \sum_{i=1}^N |\varphi_i(\mathbf{r})|^2.
+   \end{equation*}
+
+\end{frame}
+
+\begin{frame}{Outline}
+
+    Works surprisingly well!
+
+   \begin{center}
+   \includegraphics[height=0.2\textheight]{figures/giannozzi_GaAs_bandstructure.png}
+   \includegraphics[height=0.2\textheight]{figures/schreiner_reaction.jpeg}
+   \end{center}
+   \begin{center}
+   \includegraphics[height=0.3\textheight]{figures/sprik_water_radial_distribution.png}
+   \includegraphics[height=0.3\textheight]{figures/jones_crystallisation.png}
+   \includegraphics[height=0.3\textheight]{figures/cole_fmo.jpg}
+   \includegraphics[height=0.3\textheight]{figures/nature_nano_cover.png}
+   \end{center}
+   \blfootcite{Giannozzi1991, Schreiner2008, Sprik1996, Jones2015a, Cole2013, Mounet2018}
+
+   \vspace{-3ex}
+   However...
+
+\end{frame}
+
+\begin{frame}{Outline}
+   Failures of DFT:
+   \begin{itemize}
+     \item band gap is almost universally too small (TMOs)
+     \item problems with ``strongly correlated" systems
+     \item problems with vdW interactions
+     \item eigenvalues are formally meaningless
+     \item self-interaction error
+     \item static correlation error
+   \end{itemize}
+
+   \onslide<2->{
+   \begin{equation*}
+      \Phi_i(\mathbf{r}) = \sum_{i\neq j} \int d\mathbf{r}' \frac{|\psi_{n_j}(\mathbf{r}')|^2}{|\mathbf{r} - \mathbf{r}'|} \rightarrow \Phi(\mathbf{r}) = \int d\mathbf{r}' \frac{\rho(\mathbf{r})}{\mathbf{r} - \mathbf{r'}}
+   \end{equation*}
+   }
+   % \onslide<3->{
+   % \begin{equation*}
+   %    V^x_i\psi_{n_i}(\mathbf{r}) = -\frac{1}{2}\sum_{i\neq j} \psi_{n_j}(\mathbf{r'})\int d\mathbf{r}' \frac{\psi^*_{n_j}(\mathbf{r}')\psi_{n_i}(\mathbf{r}')}{|\mathbf{r} - \mathbf{r}'|}
+   % \end{equation*}
+   % }
+\end{frame}
+
+\begin{frame}{Outline}
+   % Koopman's theorem\blfootcite{Koopmans1934a}: changes in energy upon removal of electrons from unrelaxed HF orbitals: $\epsilon_{i\sigma} = - \Delta E_{i\sigma}$
+   % % at least for unrelaxed Hartree Fock
+
+   \vspace{-2em}   
+   \begin{overlayarea}{\textwidth}{0.7\textheight}
+      \centering
+
+      \begin{onlyenv}<1>
+         \includegraphics[height=0.7\textheight]{figures/curvature_plot/fig_en_curve_exact.pdf}
+      \end{onlyenv}
+
+      \begin{onlyenv}<2>
+         \includegraphics[height=0.7\textheight]{figures/curvature_plot/fig_en_curve_exact_annotated.pdf}
+      \end{onlyenv}
+
+      \begin{onlyenv}<3>
+         \includegraphics[height=0.7\textheight]{figures/curvature_plot/fig_en_curve_hf.pdf}
+      \end{onlyenv}
+
+      \begin{onlyenv}<4>
+         \includegraphics[height=0.7\textheight]{figures/curvature_plot/fig_en_curve_hf_annotated.pdf}
+      \end{onlyenv}
+
+      \begin{onlyenv}<5-6>
+         \includegraphics[height=0.7\textheight]{figures/curvature_plot/fig_en_curve_with_all.pdf}
+      \end{onlyenv}
+
+   % \only<3>{
+   % \vspace{-2em}
+   % \begin{equation*}
+   %    \frac{\partial^2 E^\mathrm{HF}_\mathrm{rel}}{\partial f_i^2} \leq \frac{\partial^2 E^\mathrm{HF}_\mathrm{unrel}}{\partial f_i^2} = 0
+   % \end{equation*}
+   % }
+
+   \only<6>{Consequences for band gaps, ionisation potentials, electron affinities...}
+   \end{overlayarea}
+   \blfootcite{Li2017}
+
+\end{frame}
+
+\begin{frame}{Outline}
+   Three methods
+   \begin{itemize}
+      \item DFT+\emph{U}
+      \item Koopmans spectral functionals
+      \item dynamical mean field theory
+   \end{itemize}
+\end{frame}
+
+\input{dft+u_derivation}
+
+\begin{frame}{Method 1: DFT+\emph{U}}
+   Manganese oxide
+   \centering
+   \hbox{
+   \begin{minipage}{0.475\textwidth}
+   \includegraphics[width=\textwidth]{figures/fig_MnO_bandgap.pdf}
+   \end{minipage}
+   \begin{minipage}{0.4\textwidth}
+   \includegraphics[width=\textwidth]{figures/fig_MnO_magmom.pdf}
+   
+   \includegraphics[width=\textwidth]{figures/fig_MnO_valence_band_edge_character.pdf}
+   \end{minipage}
+   }
+   \blfootcite{Linscott2018}
+\end{frame}
+
+\begin{frame}{Method 1: DFT+\emph{U}}
+   Hexahydrated transition metals
+   \begin{minipage}[c][0.4\paperheight][c]{\textwidth}
+      \centering
+      % \only<2>{
+         \includegraphics[height = 0.4\paperheight]{figures/fig_MnH2O63+_Th.png}
+         \includegraphics[height = 0.4\paperheight]{figures/fig_MnH2O63+_U_v_bondax.pdf}
+         \includegraphics[height = 0.4\paperheight]{figures/fig_Metal-oxygen_distances.pdf}
+      % }
+      % \only<3>{
+      %    \tiny
+      %    \input{"tab_ddExcitations_spin_flips_unchanged_U.tex"}
+      % }
+      % \only<4>{
+      %    \tiny
+      %    \input{"tab_ddExcitations_spin_conserving.tex"}
+      % }
+      % \only<5->{
+      %    \includegraphics[height = 0.3\paperheight]{../../figures/fig_acbn0_result.png}
+      % }
+   \end{minipage}
+   % \onslide<6>{Consequently we struggle to delineate between different inversion/averaging schemes}
+   \blfootcite{Linscott2018}
+\end{frame}
+
+\begin{frame}{Method 1: DFT+\emph{U}}
+   \begin{minipage}[t]{0.45\paperwidth}%
+      Strengths
+      \begin{itemize}
+         \item ``self-correcting''
+         \item computationally inexpensive
+      \end{itemize}
+   \end{minipage}
+   \begin{minipage}[t]{0.45\paperwidth}%
+      Weaknesses
+      \begin{itemize}
+         \item arbitrary subspaces (both in shape and number)
+         \item complications due to self-consistency
+         \item it's always going to increase the bandgap
+         \item nothing more than Hartree-Fock
+         \item local vs global curvature (I lied earlier...)
+      \end{itemize}
+   \end{minipage}
+\end{frame}
+
+\begin{frame}{Method 1: DFT+\emph{U}}
+   \begin{center}
+      \includegraphics[height=0.7\textheight]{figures/curvature_plot/fig_en_curve_dftu_correction.pdf}
+   \end{center}
+   \begin{align*}
+      E_\mathrm{U} = \sum_{I\sigma} \frac{U^I}{2}\Trace[\hat n^{I\sigma}(1-\hat n^{I\sigma})]
+      = \sum_{I\sigma} \frac{U^I}{2}\sum_i \lambda^{I\sigma}_i (1-\lambda^{I\sigma}_i)
+   \end{align*}
+\end{frame}
+
+\begin{frame}{Method 2: Koopmans spectral functionals}
+   \begin{overlayarea}{\textwidth}{0.7\textheight}
+      \centering
+      \begin{onlyenv}<1-3>
+         \includegraphics[height=0.6\textheight]{figures/curvature_plot/fig_en_curve_koopmans_step0.pdf}
+      \end{onlyenv}
+
+      \begin{onlyenv}<4>
+         \includegraphics[height=0.6\textheight]{figures/curvature_plot/fig_en_curve_koopmans_step1.pdf}
+      \end{onlyenv}
+
+      \begin{onlyenv}<5>
+         \includegraphics[height=0.6\textheight]{figures/curvature_plot/fig_en_curve_koopmans_step2.pdf}
+      \end{onlyenv}
+
+      \begin{onlyenv}<6>
+         \includegraphics[height=0.6\textheight]{figures/curvature_plot/fig_en_curve_koopmans_step3.pdf}
+      \end{onlyenv}
+
+   \end{overlayarea}
+
+   \vspace{-3em}
+
+   \onslide<2->{KC functionals: assert that $\varepsilon_i = \braopket{\varphi_i}{H}{\varphi_i} = \partial E/\partial f_i$ is independent of $f_i$}
+
+   \onslide<3->{
+   \begin{equation*}
+      E_{KC}[\rho,\{f_i\}] = \only<4>{\textcolor{red}}{E_{DFT}[\rho]} 
+                          + \sum_i \left(
+                          \only<5>{\textcolor{red}}{- \int^{f_i}_{0} \varepsilon_i(f) df}
+                          \only<6>{\textcolor{red}}{+ f_i \int_0^1 \varepsilon_i(f) df}
+                          \right)
+   \end{equation*}
+   }
+
+   %Starting ansatz, construction of the functional, nice figure demonstrating the terms we subtract and add
+
+   % Note that here we get the difference with KI and KIPZ; in the latter we use DFT+PZ to generate the linear term
+\end{frame}
+
+\begin{frame}{Method 2: Koopmans spectral functionals}
+   \begin{minipage}[t]{0.45\paperwidth}%
+   \begin{equation*}
+      E_{KC}[\rho,\only<2>{\textcolor{red}}{\{f_i\}}\only<3->{, \{\alpha_i\}}] = E_{DFT}[\rho]
+                          + \sum_i
+                          \only<3>{\textcolor{red}}
+                          {\only<3->{\alpha_i}}
+                          \left(
+                          - \int^{f_i}_{0} \varepsilon_i(f) df
+                          + f_i \int_0^1 {\varepsilon_i(f)} df
+                          \right)
+   \end{equation*}
+\end{minipage}
+   \begin{itemize}[<+(1)->]
+      \item orbital density dependence
+      \item screening
+   \end{itemize}
+   \onslide<3->{
+      \begin{align*}
+          \alpha_{i} =& \alpha^{0} \frac{E^\mathrm{KC}(N) - E_i^\mathrm{KC}(N-1) -\lambda_{ii}^{0}(1)}{\lambda_{ii}^{\alpha^{0}}(1)-\lambda_{ii}^{0}(1)} \\
+          \lambda_{ii}^\alpha(f) =& \left.\braopket{\varphi_{i}}{{H}^{\mathrm{DFT}}+\alpha_{i} {v}_{i}^{\mathrm{KC}}}{\varphi_{i}}\right|_{f_{i}=f} 
+      \end{align*}
+   }
+\end{frame}
+
+\begin{frame}{Method 2: Koopmans spectral functionals}
+   \begin{center}
+      \includegraphics[width=0.8\textwidth]{figures/colonna_2019_gw100_ip}
+   \end{center}
+
+   \begin{center}
+      \includegraphics[width=0.25\textwidth]{figures/gw100_molecules}
+      \includegraphics[width=0.55\textwidth]{figures/fig_gw100_ea_mae_mse.pdf}
+   \end{center}
+
+   \blfootcite{vanSetten2015}
+   \blfootcite{Colonna2019}
+\end{frame}
+
+\begin{frame}{Method 2: Koopmans spectral functionals}
+   \begin{minipage}[t]{0.45\paperwidth}%
+      Strengths
+      \begin{itemize}
+         \item systematic
+         \item orbital dependent
+         \item great results!
+      \end{itemize}
+   \end{minipage}
+   \begin{minipage}[t]{0.45\paperwidth}%
+      Weaknesses
+      \begin{itemize}
+         \item orbital dependent
+         \item complicated workflow
+         \item only for insulators
+         \item untested on ``strongly correlated'' systems
+      \end{itemize}
+   \end{minipage}
+\end{frame}
+
+\begin{frame}{Method 3: dynamical mean field theory}
+   \begin{center}
+   \input{figures/fig_biological_systems_and_insets}
+   \end{center}
+\end{frame}
+
+\begin{frame}{Method 3: dynamical mean field theory}
+   \vspace{-3ex}
+   \footnotesize
+   \begin{equation*}
+      \hat H =
+      \underbrace{\sum_{ij\sigma} (\varepsilon_{ij}-\mu) \hat c^\dag_{i\sigma} \hat c_{j\sigma}}_{\hat H_\text{bath}}
+      + \underbrace{\sum_{im\sigma} \left(V_{m i}\hat f^\dag_{m\sigma} \hat c_{i\sigma}
+      + h.c.\right)}_{\hat H_\text{mix}}
+      + \underbrace{
+      \sum_{mm'\sigma} (t_{mm'}-\mu)\hat f^\dag_{m\sigma}\hat f_{m'\sigma} + \hat H_{U}
+      }_{\hat H_\text{loc}}
+   \end{equation*}
+   \hbox{
+   \begin{minipage}[c][0.5\paperheight]{0.6\linewidth}
+
+   \input{fig_cartoon_AIM}
+
+   \vspace{-2ex}
+   \begin{align*}
+      H_U = U\sum_m n_{m\uparrow}n_{m\downarrow}
+      + \left(U'-\frac{J}{2}\right) \sum_{m>m'} n_m n_{m'} \\
+      - J \sum_{m>m'} (2\mathbf{S}_m\mathbf{S}_{m'}+
+      f^\dag_{m\uparrow}f^\dag_{m\downarrow}
+      f_{m'\uparrow}f_{m'\downarrow})
+   \end{align*}
+   \end{minipage}
+   \hspace{-3em}
+   \begin{minipage}[c][0.5\paperheight]{0.4\linewidth}
+      \scalebox{0.8}{
+      \normalsize
+
+      \input{fig_dmft_cycle.tex}
+      }
+   \end{minipage}
+   }
+
+   \blfootcite{Metzner1989a, Georges1992a, Anisimov1997b, Slater1936a, Kanamori1959a}
+\end{frame}
+
+\begin{frame}{Method 3: dynamical mean field theory}
+   \centering
+   \begin{minipage}[c][0.8\paperheight]{0.5\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{figures/fig_hemocyanin_pretty.png}
+   \end{minipage}
+   \begin{minipage}[c][0.4\paperheight]{0.475\textwidth}
+      \centering
+      % \onslide<3->{
+      %DFT\,+\,U (Scherlis \emph{et al.}) \nocite{Scherlis2007a}
+      \vbox{
+      \includegraphics[width=\textwidth]{figures/fig_hemocyanin_qm_state_distribution.pdf}
+
+      \includegraphics[width=\textwidth]{figures/fig_hemocyanin_self_energy_peak.pdf}
+      }
+      %}
+   \end{minipage}
+   % \begin{minipage}[c][0.35\paperheight]{0.4\textwidth}
+   %    \centering
+   %    %\onslide<2->{
+   %    %DFT \\
+   %    %}
+   % \end{minipage}
+   \blfootcite{al-Badri2020}
+\end{frame}
+
+\begin{frame}{Method 3: dynamical mean field theory}
+   \begin{minipage}[t]{0.45\paperwidth}%
+      Strengths
+      \begin{itemize}
+         \item accurate
+         \item truly many-body
+      \end{itemize}
+   \end{minipage}
+   \begin{minipage}[t]{0.45\paperwidth}%
+      Weaknesses
+      \begin{itemize}
+         \item arbitrary
+         \item expensive
+         \item difficult convergence
+      \end{itemize}
+   \end{minipage}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Conclusions}
+\begin{itemize}[<+(1)->]
+   \item DFT+\emph{U}: ``self-correcting", cheap, somewhat arbitrary
+   \item Koopmans spectral fumctionals: systematic but only for insulators
+   \item dynamical mean field theory: difficult but truly many-body physics
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Acknowledgements}
+   \begin{center}
+      \footnotesize
+      \begin{tabularx}{\textwidth}{XXXXX}
+        \includegraphics[height = 0.2\paperheight]{figures/daniel_cole.jpeg} &
+        \includegraphics[height = 0.2\paperheight]{figures/mike_payne.jpeg} &
+        \includegraphics[height = 0.2\paperheight]{figures/david_oregan.jpg} &
+        \includegraphics[height = 0.2\paperheight]{figures/nick_hine.png} &
+        \includegraphics[height = 0.2\paperheight]{figures/nicola_marzari.jpg} \\
+        Danny Cole &
+        Mike Payne & 
+        David O'Regan &
+        Nick Hine &
+        Nicola Marzari \\
+        \includegraphics[height = 0.2\paperheight]{figures/nicola_colonna.png} &
+        \includegraphics[height = 0.2\paperheight]{figures/riccardo_degennaro.jpg} &
+        \includegraphics[height = 0.2\paperheight]{figures/cedric_weber.jpg} &
+        \includegraphics[height = 0.2\paperheight]{figures/mohamedali_albadri.jpeg} \\
+        Nicola Colonna &
+        Riccardo De~Gennaro &
+        Cedric Weber &
+        Mohamed~Ali al-Badri
+      \end{tabularx}
+   \end{center}
+    \begin{center}
+        \includegraphics[height = 0.15\paperheight]{figures/fig_CCEIT.jpeg}
+        \hspace{1em}
+        \includegraphics[height = 0.15\paperheight]{figures/fig_Rutherford_foundation.png}
+      \hspace{1em}
+        \includegraphics[height = 0.15\paperheight]{figures/fig_EPSRC.jpg}
+    \end{center}
+    % \begin{multicols}{2}
+    %   \small
+    %   \printbibliography
+    %   \normalsize
+    % \end{multicols}
+\end{frame}
+
+\input{onetep_frames.tex}
+\input{dft+u_theory_frames.tex}
+\input{dmft_theory_frames.tex}
+
+\end{document}
